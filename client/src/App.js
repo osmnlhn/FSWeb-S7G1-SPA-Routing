@@ -17,9 +17,9 @@ export default function App() {
   useEffect(() => {
     const FilmleriAl = () => {
       axios
-        .get('http://localhost:5001/api/filmler') // Burayı Postman'le çalışın
+        .get('http://localhost:5001/api/filmler')
         .then(response => {
-          // Bu kısmı log statementlarıyla çalışın
+          
           // ve burdan gelen response'u 'movieList' e aktarın
           // console.log(response.data)
           setMovieList(response.data)
@@ -32,8 +32,8 @@ export default function App() {
   }, []);
 
   const KaydedilenlerListesineEkle = (movie) => {
-   
-    // Burası esnek. Aynı filmin birden fazla kez "saved" e eklenmesini engelleyin
+    if(!saved.find((m)=> m.id==movie.id)){
+   setSaved([...saved,movie]);}
   };
 
   return (
@@ -46,8 +46,8 @@ export default function App() {
             <Route exact path="/">
               <FilmListesi movies={movieList} />
             </Route>
-            <Route path="/filmler/:id" >
-              <Film   />
+            <Route path="/filmler/:id" exact >
+              <Film KaydedilenlerListesineEkle={KaydedilenlerListesineEkle} />
             </Route>
           </Switch>
         </Router>

@@ -4,9 +4,10 @@ import { useParams } from 'react-router-dom';
 
 export default function Film(props) {
   const [movie, setMovie] = useState();
+  const {KaydedilenlerListesineEkle}=props;
 
-  const params = useParams();
-  const id = params.id;
+  const {id} = useParams();
+  
 
   useEffect(() => {
     axios
@@ -19,9 +20,8 @@ export default function Film(props) {
       .catch(error => {
         console.error(error);
       });
-    // Bu effect her `id ` değiştiğinde çalışmalı
-    // Bunu nasıl gerçekleştirebiliriz?
-  }, []);
+    
+  }, [id]);
 
   
   // const filmiKaydet = evt => { }
@@ -50,7 +50,7 @@ export default function Film(props) {
           </div>
         ))}
       </div>
-      <div className="save-button" >Kaydet</div>
+      <button className="save-button" onClick={()=> KaydedilenlerListesineEkle(movie)}>Kaydet</button>
     </div>
   );
 }
